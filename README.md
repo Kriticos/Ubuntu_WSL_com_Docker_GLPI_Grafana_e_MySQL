@@ -71,7 +71,8 @@ sudo docker network create --driver bridge --subnet 172.18.0.0/16 network-docker
 sudo mkdir -p /bskp/{grafana,mysql,databases,glpi}
 ```
 
-**OBS:** Apos criar as pastas acesse o Windows Explorer e copia os arquivos para usas respectivas pastas
+**OBS:** Apos criar as pastas acesse o Windows Explorer e copia os arquivos para usas respectivas pastas.
+**Lembre-se de alterar os arquivos .env**
 
 ### Permissões das Pastas
 
