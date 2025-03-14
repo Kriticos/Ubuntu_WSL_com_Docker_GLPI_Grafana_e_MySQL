@@ -1,4 +1,4 @@
-# Ubuntu(WSL) com Docker + GLPI + Grafana + MySQL
+# Ubuntu WSL com Docker: GLPI, Grafana e MySQL
 
 ## 1. Ubuntu
 
