@@ -1,0 +1,25 @@
+services:
+  glpi:
+    image: diouxx/glpi:latest
+    container_name: ${GLPI_CONTAINER}
+    environment:
+      DB_SERVER_HOST: ${DB_SERVER_HOST}
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
+      MYSQL_USER: ${MYSQL_USER}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+      PHP_TZ: ${PHP_TZ}
+    ports:
+      - ${PORTS_GLPI}
+    volumes:
+      - ${VOL_GLPI}
+    networks:
+      network-docker:
+        ipv4_address: ${IPV4_GLPI}
+    restart: unless-stopped
+
+networks:
+  network-docker:
+    external: true
+    ipam:
+      config:
+        - subnet: ${SUBNET}

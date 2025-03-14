@@ -1,0 +1,29 @@
+services:
+  srv-grafana:
+    image: grafana/grafana:${RELEASE}
+    container_name: ${SRV_GRAFANA_HOST}
+    environment:
+      DB_SERVER_HOST: ${DB_SERVER_HOST}
+      GF_SECURITY_ADMIN_PASSWORD: ${ADMIN_PASSWD}
+      GF_DATABASE_TYPE: ${DATABASE_TYPE}
+      GF_DATABASE_HOST: ${DATABASE_HOST}
+      GF_DATABASE_NAME: ${DATABASE_NAME}
+      GF_DATABASE_USER: ${DATABASE_USER}
+      GF_DATABASE_PASSWORD: ${DATABASE_PASSWORD}
+    ports:
+      - ${PORTS}
+    networks:
+      network-docker:
+        ipv4_address: ${IPV4_ADDRESS}
+    volumes:
+      - ${VOL01}
+      - ${VOL02}
+      - ${VOL03}
+    restart: unless-stopped
+
+networks:
+  network-docker:
+    external: true
+    ipam:
+      config:
+        - subnet: ${SUBNET}

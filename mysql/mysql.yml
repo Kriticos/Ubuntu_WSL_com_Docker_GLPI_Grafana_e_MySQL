@@ -1,0 +1,27 @@
+services:
+  srv-mysql:
+    image: ${RELEASE}
+    container_name: ${SRV_HOST}
+    environment:
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
+      MYSQL_USER: ${MYSQL_USER}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      
+    command: --character-set-server=utf8 --collation-server=utf8_bin
+    volumes:
+      - ${VOL01}
+      - ${VOL02}
+    networks:
+      network-docker:
+        ipv4_address: ${IPV4_ADDRESS}  # IP fixo para o srv-mysql
+    ports:
+      - ${PORTS}
+    restart: unless-stopped
+
+networks:
+  network-docker:
+    external: true
+    ipam:
+      config:
+        - subnet: ${SUBNET}  # Faixa de IPs para a rede
