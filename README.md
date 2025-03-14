@@ -119,3 +119,106 @@ http://localhost:6080/
 ```html
 http://localhost:7080/
 ```
+
+# Configurações Adicionais
+
+Esta seção permite que o Ubuntu seja executado automaticamente sempre que você fizer logon no Windows, além de configurar o ambiente Ubuntu/WSL para iniciar o serviço Docker e ajustar a alocação de recursos.
+
+---
+
+## A. Configurando o Script wsl_ubuntu.ps1
+
+1. **Criar o Script**  
+   - Abra o Bloco de Notas e cole o texto abaixo:
+
+   ```bash
+       wsl -d ubuntu -u root
+   ```
+
+2. **Salvar o Script**  
+   - Salve o arquivo na pasta **"C:\Scripts"** com o nome **.ps1**.
+
+---
+
+## B. Criando uma Tarefa no Agendador do Windows
+
+Siga os passos abaixo para configurar uma tarefa que executa o wsl_ubuntu automaticamente:
+
+1. **Abrir o Agendador de Tarefas**  
+   - Clique com o botão direito do mouse em **"Biblioteca do Agendador de Tarefas"**.  
+   - Selecione **"Criar Tarefa Básica"**.
+
+2. **Definir Nome e Gatilho**  
+   - Informe um nome para a tarefa e clique em **"Avançar"**.  
+   - Selecione **"Ao fazer logon"** como gatilho e clique em **"Avançar"**.
+
+3. **Configurar a Ação**  
+   - Selecione **"Iniciar um programa"** e clique em **"Avançar"**.  
+   - No campo **"Programa/Script"**, insira o seguinte caminho:
+
+   ```txt
+       C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe
+   ```
+
+   - No campo **"Adicione argumentos"** (opcional), insira:
+
+   ```txt
+       -File "C:\Scripts\wsl_ubuntu.ps1"
+   ```
+
+4. **Finalizar Configuração**  
+   - Clique em **"Avançar"** e, em seguida, em **"Concluir"** para salvar a tarefa.
+
+> Agora, sua tarefa será executada automaticamente ao fazer logon no sistema.
+
+---
+
+## C. Configurando o Ubuntu e o Docker no WSL
+
+Após configurar a tarefa, siga os passos abaixo para ajustar o ambiente Ubuntu/WSL:
+
+1. **Abrir o Ubuntu via PowerShell**  
+   - Abra o PowerShell e digite:
+
+   ```bash
+       wsl -d ubuntu -u root
+   ```
+
+2. **Editar o Arquivo wsl.conf**  
+   - No terminal, execute:
+
+   ```bash
+       nano /etc/wsl.conf
+   ```
+
+3. **Adicionar Configuração para Iniciar o Docker**  
+   - Ao final do arquivo, adicione a linha abaixo. Em seguida, pressione **Ctrl + X**, depois **Y** para salvar e **Enter** para sair:
+
+   ```bash
+       command = "service docker start"
+   ```
+
+4. **Sair do Terminal**  
+   - Digite:
+
+   ```bash
+       exit
+   ```
+
+---
+
+## D. Adicional 02: Ajuste de Memória e Processadores para o WSL
+
+1. **Criar o Arquivo de Configuração**  
+   - Abra o Bloco de Notas e digite o seguinte:
+
+   ```notepad
+       [wsl2]
+       memory=4GB
+       processors=4
+   ```
+
+2. **Salvar o Arquivo**  
+   - Salve o arquivo na pasta do seu usuário do Windows (por exemplo, **C:\Usuarios\NOME_DO_SEU_USUARIO\\**) com o nome **.wslconfig**.
+
+> **OBS:** Altere os valores de memória e processadores conforme necessário para otimizar o desempenho do WSL.
